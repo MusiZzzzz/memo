@@ -27,13 +27,24 @@ document.addEventListener("DOMContentLoaded",
         const value = document.getElementById("textMemo").value; //  get value
         if(key != "" && value != ""){    //key と value　内容がある場合 
             //処理の確認用窓口
-            let SaveReally = confirm("LocalStorageのテーブルに\n" + key + " " + value + "を保存(save)します \nよろしいでしょうか");
-            if(SaveReally === true){
-                saveBtn(); //save機能の使用
+            let SaveReally = "LocalStorageのテーブルに\n「" + key + " " + value + "」を保存(save)します \nよろしいでしょうか";
+            Swal.fire({                   
+                tytle: "Memo app"
+                ,html: SaveReally
+                ,type: "question"
+                ,showCancelButton : true
+            }).then(function(Saveend){
+            if(Saveend.value === true){
+                saveBtn(); }//save機能の使用
+            });
+        }else{
+                Swal.fire({
+                    tytle: "Memo app"
+                    ,html: "Key、Memoはいずれも必須です。"
+                    ,type: "error"
+                    ,allowOutsideClick : false
+                });
             }
-        }else{        
-        var msg = "Key、Memoはいずれも必須です。";
-        window.alert(msg);}
          },false
         );
     };
@@ -65,24 +76,43 @@ document.addEventListener("DOMContentLoaded",
             w_cnt = selectCheckbox("del");
             //　行数が１以上
             if(w_cnt >= 1){
-                let w_confirm = window.confirm("LocalSotrageから選択している" + w_cnt + "件を削除(delect)しますか?");
+                let w_confirm = "LocalSotrageから選択している" + w_cnt + "件を削除(delect)しますか?";
+                Swal.fire({                   
+                    tytle: "Memo app"
+                    ,html: w_confirm
+                    ,type: "question"
+                    ,showCancelButton : true
+                }).then(function(w_confirm){
                 // ユーザーが確定ボタンを押しての処理
-                if(w_confirm === true){
-                    for(let i = 0;i <= w_cnt;i++){
+                if(w_confirm.value === true){
+                    for(let i = 0;i < chkbox1.length;i++){
                         if(chkbox1[i].checked){
                         localStorage.removeItem(table1.rows[i+1].cells[1].firstChild.data);
                         }
-                    }
+                     }
                 viewStorage(); // 値を一度表示すること
                 let w_msg = "localStorageから" + w_cnt + "件を削除しました。";
-                window.alert(w_msg);
+                Swal.fire({                   
+                    tytle: "Memo app"
+                    ,html: w_msg
+                    ,type: "success"
+                    ,allowOutsideClick : false
+                })
                 document.getElementById("textKey").value = ""; //labelをクリア
                 document.getElementById("textMemo").value = ""; //labelをクリア
-                     }
-                 }
-            },false
-        );
-    }
+                    }
+                });
+                }else{
+                    Swal.fire({
+                        tytle: "Memo app"
+                        ,html: "削除するものが選んでください！"
+                        ,type: "error"
+                        ,allowOutsideClick : false
+                    });
+                }
+            },false);
+        }
+
 
     // 7.すべて削除
 
@@ -92,20 +122,31 @@ document.addEventListener("DOMContentLoaded",
         function(e){
             e.preventDefault();
             //処理の確認用窓口
-            let w_confirm = confirm("LocalStorageのテーブルをすべて削除(all Clear)します \nよろしいでしょうか");
-                if(w_confirm == true){
+            let w_confirm = "LocalStorageのテーブルをすべて削除(all Clear)します \nよろしいでしょうか";
+            Swal.fire({
+                tytle: "Memo app"
+                ,html: w_confirm
+                ,type: "question"
+                ,showCancelButton : true 
+            }).then(function(w_confirm){
+                if(w_confirm.value === true){
                 //localStorageの削除指令を使用する
                 localStorage.clear();
                 viewStorage();
                 let w_msg = "LocalStorageのデータをすべて削除しました。";
-                window.alert(w_msg);
+                Swal.fire({                   
+                    tytle: "Memo app"
+                    ,html: w_msg
+                    ,type: "success"
+                    ,allowOutsideClick : false
+                })
                 // label keyとvalueの初期化
                 document.getElementById("textKey").value = ""; //labelをクリア
                 document.getElementById("textMemo").value = ""; //labelをクリア
-            }
+                }
+                });
+            })
         }
-        )
-    }
     //　選択機能
     function selectCheckbox(mode){
        // let w_sel = "0";
@@ -132,15 +173,18 @@ document.addEventListener("DOMContentLoaded",
                         if(w_cnt === 1){
                           return w_cnt; // w_cnt　を 1 として返し
                         }else{
-                          window.alert("一つ選択(select)してください。"); //必ず一つを選択
-                     }
+                                Swal.fire({
+                                    tytle: "Memo app"
+                                    ,html: "必ず一つ選んでください！"
+                                    ,type: "error"
+                                    ,allowOutsideClick : false
+                                });
+                        }
                 }
                     // modeがdelの場合の機能対応
                     if(mode === "del"){
                         if(w_cnt > 0){
                             return w_cnt;
-                        }else{
-                            window.alert("一つ選択(select)してください。") //　選択肢が1以上ではない場合の処理
                         }
                     }
                 }
@@ -152,7 +196,12 @@ function saveBtn(){
     localStorage.setItem(key, value);   //localStorageからsetItemの機能を使用して、keyとvalueをlocalStorageに保存する
     viewStorage();
     let w_msg = "localStorageに" + key + " " + value + "を保存しました。";
-    window.alert(w_msg);
+    Swal.fire({                   
+        tytle: "Memo app"
+        ,html: w_msg
+        ,type: "success"
+        ,allowOutsideClick : false
+    })
     document.getElementById("textKey").value = ""; //labelをクリア
     document.getElementById("textMemo").value = ""; //labelをクリア
     }
