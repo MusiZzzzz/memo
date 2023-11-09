@@ -1,3 +1,10 @@
+/**
+* viewStorage -> localStorageからのデータの取得機能
+* saveLocalStorage -> localStorageの保存機能
+* selectTable -> 選択機能
+* delLocalStorage -> 削除機能
+* allClearStorage -> すべて削除機
+*/
 "use strict";
 
 document.addEventListener("DOMContentLoaded",
@@ -8,11 +15,12 @@ document.addEventListener("DOMContentLoaded",
         window.alert("このブラウザはLocal Storage機能が実装されていません");
         return;
     }else{
-        viewStorage();  // localStorageからのデータの取得機能
-        saveLocalStorage(); // localStorageの保存機能
-        selectTable();  //選択機能
-        delLocalStorage();  //削除機能
-        allClearStorage();  //すべて削除機能
+        /* 機能check */
+        viewStorage(); 
+        saveLocalStorage();
+        selectTable();  
+        delLocalStorage(); 
+        allClearStorage();  
     }
 },false
 );
@@ -27,7 +35,7 @@ document.addEventListener("DOMContentLoaded",
         const value = document.getElementById("textMemo").value; //  get value
         if(key != "" && value != ""){    //key と value　内容がある場合 
             //処理の確認用窓口
-            let SaveReally = "LocalStorageのテーブルに\n「" + key + " " + value + "」を保存(save)します \nよろしいでしょうか";
+            let SaveReally = "LocalStorageのテーブルに\n「" + key + "」と「 " + value + "」を保存(save)します。 \nよろしいでしょうか";
             Swal.fire({                   
                 tytle: "Memo app"
                 ,html: SaveReally
@@ -76,9 +84,9 @@ document.addEventListener("DOMContentLoaded",
             w_cnt = selectCheckbox("del");
             //　行数が１以上
             if(w_cnt >= 1){
-                let w_confirm = "LocalSotrageから選択している" + w_cnt + "件を削除(delect)しますか?";
+                let w_confirm = "LocalSotrageから選択している" + w_cnt + "件を削除(delete)しますか?";
                 Swal.fire({                   
-                    tytle: "Memo app"
+                    title: "Memo app"
                     ,html: w_confirm
                     ,type: "question"
                     ,showCancelButton : true
@@ -105,13 +113,50 @@ document.addEventListener("DOMContentLoaded",
                 }else{
                     Swal.fire({
                         tytle: "Memo app"
-                        ,html: "削除するものが選んでください！"
+                        ,html: "削除するものを選んでください！"
                         ,type: "error"
                         ,allowOutsideClick : false
                     });
                 }
-            },false);
+            },false
+            );
+            
+            del_row();// class:trashボタンをaddEvenListener使用;
         }
+
+        // version-up5 add-str
+        function del_row(){
+            const table1 = document.getElementById("table1"); // get table1
+            table1.addEventListener("click",(e) =>{
+                if(e.target.classList.contains("trash") === true){   //ボタンを押した、動作開始
+                    let tr = e.target.parentNode.parentNode; //get 行数の父の父要素
+                    const key = tr.querySelector("td:nth-child(2)").textContent; //選択行のkeyの部分を取得
+                    const value = tr.querySelector("td:nth-child(3)").textContent; //選択行のvalueの部分を取得
+                    if(key){
+                        let w_confirm = "LocalSotrageから選択しているkey:「" + key + "」とvalue:「" + value + "」を削除(delete)します。\nよろしでしょうか?";
+                        Swal.fire({                   
+                            title: "Memo app"
+                            ,html: w_confirm
+                            ,type: "question"
+                            ,showCancelButton : true
+                        }).then(function(w_confirm){
+                        if(w_confirm.value === true){ //確認動作
+                        localStorage.removeItem(key); //keyを削除します。
+                        tr.remove();//行を削除します。
+                        let w_msg = "localStorageから「" + key + "」と「" + value + "」を削除しました。";
+                        Swal.fire({                   
+                            tytle: "Memo app"
+                            ,html: w_msg
+                            ,type: "success"
+                            ,allowOutsideClick : false
+                                    })
+                                 }
+                            });
+                         }
+                        }
+                    });
+            }
+        // version-up5 add-end
 
 
     // 7.すべて削除
@@ -122,7 +167,7 @@ document.addEventListener("DOMContentLoaded",
         function(e){
             e.preventDefault();
             //処理の確認用窓口
-            let w_confirm = "LocalStorageのテーブルをすべて削除(all Clear)します \nよろしいでしょうか";
+            let w_confirm = "LocalStorageのテーブルをすべて削除(all Clear)します。 \nよろしいでしょうか";
             Swal.fire({
                 tytle: "Memo app"
                 ,html: w_confirm
@@ -195,7 +240,7 @@ function saveBtn(){
     const value = document.getElementById("textMemo").value;   //HtmlからtextMemoの値はValueという変数を代入する
     localStorage.setItem(key, value);   //localStorageからsetItemの機能を使用して、keyとvalueをlocalStorageに保存する
     viewStorage();
-    let w_msg = "localStorageに" + key + " " + value + "を保存しました。";
+    let w_msg = "localStorageに「" + key + "」「 " + value + "」を保存しました。";
     Swal.fire({                   
         tytle: "Memo app"
         ,html: w_msg
@@ -223,13 +268,16 @@ function saveBtn(){
         let td1 = document.createElement("td");
         let td2 = document.createElement("td");
         let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
         list.appendChild(tr);
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
+        tr.appendChild(td4);
         td1.innerHTML = "<input name ='chkbox1' type = 'checkbox'>";
         td2.innerHTML = w_key;
         td3.innerHTML = localStorage.getItem(w_key);
+        td4.innerHTML = "<img src='img/trash_icon.png' class='trash'>";
     }
 
     $("#table1").tablesorter({

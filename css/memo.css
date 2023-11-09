@@ -16,13 +16,12 @@ body{
   Meiryo,
   sans-serif;
   text-align: center;
-  /* background-color:rgba(233, 168, 227, 0.6);
-  background-blend-mode: soft-light; */
-  background-image: url(../img/hello_world.png); 
+	background: linear-gradient(#99f, #f99);
+  /* background-image: url(../img/Hello_World.png);  */
   background-size:cover;
 }
 
-header, main, footer, h1, h2, h3, p, div, table, .field, .btn-area,.field01 {
+header, main, h1, h2, h3, p, div, table, .field, .btn-area,.field01 {
     margin: 0.5em 0em 0em 0em;
     padding: 0.1em;
 }
@@ -46,14 +45,23 @@ h2 {
 /* メイン                                              */
 /*******************************************************/
 /* KEY 入力エリア */
-.field01 {
-  position: relative;
-  height: 5em;
+.field01{
+  width: 6em;
+  height: 2em;
+	display: flex;
+	transition: all 1.5s;
+	border-radius: 5px;
+	backdrop-filter: blur(1px);
+	background: linear-gradient(to right,rgba(214, 143, 255, 0.2),rgba(46, 46, 46, 0.5));
 }
-/* MEMO 入力エリア */
-.field02 {
-  position: relative;
-  height: 10em;
+.field02{
+  width: 7em;
+  height: 2em;
+  margin-top: 2em;
+  margin-bottom: 8em;
+	border-radius: 5px;
+	backdrop-filter: blur(1px);
+	background: linear-gradient(to bottom right,rgba(214, 143, 255, 0.2),rgba(46, 46, 46, 0.5));
 }
 /* ラベル */
 label {
@@ -75,6 +83,7 @@ label::after{
 }
 /* テキストエリア */
 textarea{
+  outline-color:#09f592;
   position: absolute;
   top: 2em;
   left: 3em;
@@ -83,7 +92,7 @@ textarea{
 /* ★自分でコーディングする！(code by yourself)...  疑似要素「::placeholder」を使って、textareaの文字の色を定義する。*/
   /* placeholder */
   textarea::placeholder{
-    color: #46aef7;
+    color: #5350509a;
   }
 /* ボタン */
 .btn-area{
@@ -92,12 +101,19 @@ textarea{
 }
 #save,#select,#del,#allClear{
   padding: 0.5em;
-  border-radius: 0.3em;
+  color: #7f8;
+  text-decoration: none;
+  border: 3px solid #7f8;
+  background-color: #35373a;
+  transition: all 0.5s;
+  /* border-radius: 0.3em;
   color: whitesmoke;
   font-size: 1em;
-  background: rgb(26, 212, 212);
+  background: rgb(26, 212, 212); */
   cursor: pointer; /*カーソルをポインターの形（かたち）にする*/
 }
+
+
 
 /*********************テーブル**************/
 
@@ -109,16 +125,28 @@ table{
   opacity: 0.9;
 }
 table th{
-  background: gray;
+  background: rgb(8, 7, 7);
 }
-table th,table td{
+table th{
   padding: 0.5em 0;
-  border: solid 0.1em #fff;
-  color: white;
+  border: solid 0.2em #09f592;
+  color: rgb(255, 253, 253);
   text-align: center;
 }
+
+table td{
+  padding: 0.5em 0;
+  border: solid 0.2em #09f592;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+table td:nth-child(4) img.trash{
+  cursor: pointer;
+}
+
 table tr{
-  background: #46aef7;
+  background: #4b4c4d;
 }
 .width10{
   width: 10%;
@@ -130,6 +158,11 @@ table tr{
 
 .width60{
   width: 60%;
+}
+
+.width90{
+  width: 10%;
+  background-color: rgb(212, 103, 103);
 }
 
 /********************************************************/
@@ -178,3 +211,17 @@ table tr{
   background: rgb(26, 212, 212);
   cursor: pointer; /*カーソルをポインターの形（かたち）にする*/
 }
+
+
+footer{
+  margin-top: 5em;
+  color: #7575759a;
+	display: flex;
+  height: 5em;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+	white-space: nowrap;
+  user-select: none;
+}
+
