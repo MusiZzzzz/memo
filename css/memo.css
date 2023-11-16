@@ -53,6 +53,7 @@ h2 {
 /*******************************************************/
 /* KEY 入力エリア */
 .field01 {
+  margin-left: 3em;
   width: 6em;
   height: 2em;
   display: flex;
@@ -66,6 +67,7 @@ h2 {
   );
 }
 .field02 {
+  margin-left: 3em;
   width: 7em;
   height: 2em;
   margin-top: 2em;
@@ -100,7 +102,7 @@ label::after {
 textarea {
   outline-color: #09f592;
   position: absolute;
-  top: 2em;
+  top: 2.5em;
   left: 3em;
 }
 
@@ -135,6 +137,7 @@ textarea::placeholder {
   margin-left: 3em;
   text-align: left;
 }
+
 #save,
 #select,
 #del,
@@ -150,6 +153,17 @@ textarea::placeholder {
   font-size: 1em;
   background: rgb(26, 212, 212); */
   cursor: pointer; /*カーソルをポインターの形（かたち）にする*/
+}
+
+#save {
+  margin-bottom: 5px;
+  margin-top: -15px;
+  font-size: 1em;
+}
+#select,
+#del,
+#allClear {
+  font-size: 1em;
 }
 
 /*********************テーブル**************/
