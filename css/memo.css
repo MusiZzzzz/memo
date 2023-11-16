@@ -89,6 +89,29 @@ textarea{
   left: 3em;
 }
 
+/* sweetalert2 定義 */
+.swal2-title{
+  color:rgb(11, 163, 87)!important;
+}
+
+.custom-text-color-key{
+  color: rgb(247, 46, 46);
+  font-weight: bold;
+  font-size: larger;
+}
+.custom-text-color-value{
+  color: rgb(247, 46, 46);
+  font-weight: bold;
+  font-size: larger;
+}
+.custom-text-color-w_cnt{
+  color: rgb(247, 46, 46);
+  font-weight: bold;
+  font-size: larger;
+}
+
+
+
 /* ★自分でコーディングする！(code by yourself)...  疑似要素「::placeholder」を使って、textareaの文字の色を定義する。*/
   /* placeholder */
   textarea::placeholder{

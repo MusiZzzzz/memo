@@ -35,23 +35,26 @@ document.addEventListener("DOMContentLoaded",
         const value = document.getElementById("textMemo").value; //  get value
         if(key != "" && value != ""){    //key と value　内容がある場合 
             //処理の確認用窓口
-            let SaveReally = "LocalStorageのテーブルに\n「" + key + "」と「 " + value + "」を保存(save)します。 \nよろしいでしょうか";
+            let SaveReally = `LocalStorageのテーブルに<span class="custom-text-color-key">「${key}」</span>と<span class="custom-text-color-value">「${value}」</span>を保存(save)します。 \nよろしいでしょうか`;
             Swal.fire({                   
-                tytle: "Memo app"
-                ,html: SaveReally
-                ,type: "question"
+                title: "Memo app"
+                ,html:`'<img src="img/qstion.gif" height = "170"> <div style="text-align: center;">${SaveReally}</div>'`
+                ,background:"linear-gradient(#99f, #f99)"
                 ,showCancelButton : true
             }).then(function(Saveend){
             if(Saveend.value === true){
                 saveBtn(); }//save機能の使用
             });
+            questionsound("question");
         }else{
                 Swal.fire({
-                    tytle: "Memo app"
+                    title: "Memo app"
                     ,html: "Key、Memoはいずれも必須です。"
                     ,type: "error"
+                    ,background:"linear-gradient(#99f, #f99)"
                     ,allowOutsideClick : false
                 });
+                questionsound("start");
             }
          },false
         );
@@ -64,7 +67,7 @@ document.addEventListener("DOMContentLoaded",
         select.addEventListener("click",
         function(e){
             e.preventDefault();
-            selectCheckbox("select"); // selectRadioBtnの使用
+            selectCheckbox("select"); // selectCheckboxの"select"使用
         },false
         );
     }
@@ -84,11 +87,11 @@ document.addEventListener("DOMContentLoaded",
             w_cnt = selectCheckbox("del");
             //　行数が１以上
             if(w_cnt >= 1){
-                let w_confirm = "LocalSotrageから選択している" + w_cnt + "件を削除(delete)しますか?";
+                let w_confirm = `LocalSotrageから選択している<span class="custom-text-color-w_cnt">「${w_cnt}」</span>件を削除(delete)しますか?`;
                 Swal.fire({                   
                     title: "Memo app"
-                    ,html: w_confirm
-                    ,type: "question"
+                    ,html:`'<img src="img/qstion.gif" height = "170"> <div style="text-align: center;">${w_cnt}</div>'`
+                    ,background:"linear-gradient(#99f, #f99)"
                     ,showCancelButton : true
                 }).then(function(w_confirm){
                 // ユーザーが確定ボタンを押しての処理
@@ -99,11 +102,12 @@ document.addEventListener("DOMContentLoaded",
                         }
                      }
                 viewStorage(); // 値を一度表示すること
-                let w_msg = "localStorageから" + w_cnt + "件を削除しました。";
+                let w_msg = `localStorageから<span class="custom-text-color-w_cnt">「${w_cnt}」</span>件を削除しました。`;
                 Swal.fire({                   
-                    tytle: "Memo app"
+                    title: "Memo app"
                     ,html: w_msg
                     ,type: "success"
+                    ,background:"linear-gradient(#99f, #f99)"
                     ,allowOutsideClick : false
                 })
                 document.getElementById("textKey").value = ""; //labelをクリア
@@ -112,11 +116,13 @@ document.addEventListener("DOMContentLoaded",
                 });
                 }else{
                     Swal.fire({
-                        tytle: "Memo app"
+                        title: "Memo app"
                         ,html: "削除するものを選んでください！"
                         ,type: "error"
+                        ,background:"linear-gradient(#99f, #f99)"
                         ,allowOutsideClick : false
                     });
+                    questionsound("start");
                 }
             },false
             );
@@ -128,26 +134,28 @@ document.addEventListener("DOMContentLoaded",
         function del_row(){
             const table1 = document.getElementById("table1"); // get table1
             table1.addEventListener("click",(e) =>{
-                if(e.target.classList.contains("trash") === true){   //ボタンを押した、動作開始
+                if(e.target.classList.contains("trash") === true){
+                    questionsound("question");   //ボタンを押した、動作開始
                     let tr = e.target.parentNode.parentNode; //get 行数の父の父要素
                     const key = tr.querySelector("td:nth-child(2)").textContent; //選択行のkeyの部分を取得
                     const value = tr.querySelector("td:nth-child(3)").textContent; //選択行のvalueの部分を取得
                     if(key){
-                        let w_confirm = "LocalSotrageから選択しているkey:「" + key + "」とvalue:「" + value + "」を削除(delete)します。\nよろしでしょうか?";
+                        let w_confirm = `LocalSotrageから選択しているkey:<span class="custom-text-color-key">「${key}」</span>とvalue:<span class="custom-text-color-value">「${value}」</span>を削除(delete)します。\nよろしでしょうか?`;
                         Swal.fire({                   
                             title: "Memo app"
-                            ,html: w_confirm
-                            ,type: "question"
+                            ,html:`'<img src="img/qstion.gif" height = "170"> <div style="text-align: center;">${w_confirm}</div>'`
+                            ,background:"linear-gradient(#99f, #f99)"
                             ,showCancelButton : true
                         }).then(function(w_confirm){
                         if(w_confirm.value === true){ //確認動作
                         localStorage.removeItem(key); //keyを削除します。
                         tr.remove();//行を削除します。
-                        let w_msg = "localStorageから「" + key + "」と「" + value + "」を削除しました。";
+                        let w_msg = `localStorageから<span class="custom-text-color-key">「${key}」</span>と<span class="custom-text-color-value">「${value}」</span>を削除しました。`;
                         Swal.fire({                   
-                            tytle: "Memo app"
+                            title: "Memo app"
                             ,html: w_msg
                             ,type: "success"
+                            ,background:"linear-gradient(#99f, #f99)"
                             ,allowOutsideClick : false
                                     })
                                  }
@@ -166,23 +174,25 @@ document.addEventListener("DOMContentLoaded",
         allClear.addEventListener("click",
         function(e){
             e.preventDefault();
+            questionsound("question");
             //処理の確認用窓口
-            let w_confirm = "LocalStorageのテーブルをすべて削除(all Clear)します。 \nよろしいでしょうか";
+            let w_confirm = `LocalStorageのテーブルを<span class="custom-text-color-key">すべて</span>削除(all Clear)します。 \nよろしいでしょうか`;
             Swal.fire({
-                tytle: "Memo app"
-                ,html: w_confirm
-                ,type: "question"
+                title: "Memo app"
+                ,html:`'<img src="img/qstion.gif" height = "170"> <div style="text-align: center;">${w_confirm}</div>'`
+                ,background:"linear-gradient(#99f, #f99)"
                 ,showCancelButton : true 
             }).then(function(w_confirm){
                 if(w_confirm.value === true){
                 //localStorageの削除指令を使用する
                 localStorage.clear();
                 viewStorage();
-                let w_msg = "LocalStorageのデータをすべて削除しました。";
+                let w_msg = `LocalStorageのデータを<span class="custom-text-color-key">すべて</span>削除しました。`;
                 Swal.fire({                   
-                    tytle: "Memo app"
+                    title: "Memo app"
                     ,html: w_msg
                     ,type: "success"
+                    ,background:"linear-gradient(#99f, #f99)"
                     ,allowOutsideClick : false
                 })
                 // label keyとvalueの初期化
@@ -219,12 +229,16 @@ document.addEventListener("DOMContentLoaded",
                           return w_cnt; // w_cnt　を 1 として返し
                         }else{
                                 Swal.fire({
-                                    tytle: "Memo app"
+                                    title: "Memo app"
                                     ,html: "必ず一つ選んでください！"
                                     ,type: "error"
+                                    ,background:"linear-gradient(#99f, #f99)"
                                     ,allowOutsideClick : false
                                 });
+                                questionsound("start");
                         }
+                        document.getElementById("textKey").value = ""; //labelをクリア
+                        document.getElementById("textMemo").value = ""; //labelをクリア
                 }
                     // modeがdelの場合の機能対応
                     if(mode === "del"){
@@ -240,15 +254,28 @@ function saveBtn(){
     const value = document.getElementById("textMemo").value;   //HtmlからtextMemoの値はValueという変数を代入する
     localStorage.setItem(key, value);   //localStorageからsetItemの機能を使用して、keyとvalueをlocalStorageに保存する
     viewStorage();
-    let w_msg = "localStorageに「" + key + "」「 " + value + "」を保存しました。";
+    let w_msg = `localStorageに<span class="custom-text-color-key">「${key}」と<span class="custom-text-color-value">「${value}」</span>を保存しました。`;
     Swal.fire({                   
         tytle: "Memo app"
         ,html: w_msg
         ,type: "success"
+        ,background:"linear-gradient(#99f, #f99)"
         ,allowOutsideClick : false
     })
     document.getElementById("textKey").value = ""; //labelをクリア
     document.getElementById("textMemo").value = ""; //labelをクリア
+    }
+
+    function questionsound(control){
+        if(control === "start"){
+            const qsmusic = new Audio("./sound/mus1.mp3");
+            qsmusic.currentTime = 0;
+            qsmusic.play();
+        }if(control === "question"){
+            const qsmusic = new Audio("./sound/cat.mp3");
+            qsmusic.currentTime = 0;
+            qsmusic.play();
+        }
     }
 
 
