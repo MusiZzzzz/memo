@@ -3,7 +3,7 @@
  * saveLocalStorage -> localStorageの保存機能
  * selectTable -> 選択機能
  * delLocalStorage -> 削除機能
- * allClearStorage -> すべて削除機
+ * allClearStorage -> すべて削除機能
  */
 "use strict";
 
@@ -282,6 +282,11 @@ function saveBtn() {
   document.getElementById("textMemo").value = ""; //labelをクリア
 }
 
+/**
+ * "start" -> NO
+ *  "question" -> question
+ * "success" -> OK
+ */
 function questionsound(control) {
   if (control === "start") {
     const qsmusic = new Audio("./sound/mus1.mp3");
