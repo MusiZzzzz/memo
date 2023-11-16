@@ -5,7 +5,7 @@
  * delLocalStorage -> 削除機能
  * allClearStorage -> すべて削除機能
  */
-"use strict";
+("use strict");
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -42,8 +42,8 @@ function saveLocalStorage() {
         let SaveReally = `LocalStorageのテーブルに<span class="custom-text-color-key">「${key}」</span>と<span class="custom-text-color-value">「${value}」</span>を保存(save)します。よろしいでしょうか?`;
         Swal.fire({
           title: "Memo app",
-          html: `'<img src="img/qstion.gif"> <div style="text-align: center;">${SaveReally}</div>`,
-          background: "linear-gradient(#99f, #f99)",
+          html: `<img src="img/qstion.gif"> <div style="text-align: center;">${SaveReally}</div>`,
+          background: "rgba(165, 243, 243)",
           showCancelButton: true,
         }).then(function (Saveend) {
           if (Saveend.value === true) {
@@ -80,6 +80,7 @@ function selectTable() {
   );
 }
 
+//<Delete />;
 //6.削除
 
 function delLocalStorage() {
@@ -154,10 +155,10 @@ function del_row() {
       const key = tr.querySelector("td:nth-child(2)").textContent; //選択行のkeyの部分を取得
       const value = tr.querySelector("td:nth-child(3)").textContent; //選択行のvalueの部分を取得
       if (key) {
-        let w_confirm = `LocalSotrageから選択しているkey:<span class="custom-text-color-key">「${key}」</span>とvalue:<span class="custom-text-color-value">「${value}」</span>を削除(delete)します。\nよろしでしょうか?`;
+        let w_confirm = `LocalSotrageから選択しているkey:<span class="custom-text-color-key">「${key}」</span>とvalue:<span class="custom-text-color-value">「${value}」</span>を削除(delete)します。よろしでしょうか?`;
         Swal.fire({
           title: "Memo app",
-          html: `'<img src="img/qstion.gif"> <div style="text-align: center;">${w_confirm}</div>'`,
+          html: `<img src="img/qstion.gif"> <div style="text-align: center;">${w_confirm}</div>`,
           background: "linear-gradient(#99f, #f99)",
           showCancelButton: true,
         }).then(function (w_confirm) {
@@ -190,10 +191,10 @@ function allClearStorage() {
     e.preventDefault();
     questionsound("question");
     //処理の確認用窓口
-    let w_confirm = `LocalStorageのテーブルを<span class="custom-text-color-key">すべて</span>削除(all Clear)します。 \nよろしいでしょうか`;
+    let w_confirm = `LocalStorageのテーブルを<span class="custom-text-color-key">すべて</span>削除(all Clear)します。 よろしいでしょうか`;
     Swal.fire({
       title: "Memo app",
-      html: `'<img src="img/qstion.gif"> <div style="text-align: center;">${w_confirm}</div>'`,
+      html: `<img src="img/qstion.gif"> <div style="text-align: center;">${w_confirm}</div>`,
       background: "linear-gradient(#99f, #f99)",
       showCancelButton: true,
     }).then(function (w_confirm) {
