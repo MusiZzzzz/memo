@@ -144,7 +144,6 @@ function allClearStorage() {
     }).then(function (w_confirm) {
       if (w_confirm.value === true) {
         allClearBtn();   //allClear機能を使用
-        questionsound("success");
         // label keyとvalueの初期化
         document.getElementById("textKey").value = ""; //labelをクリア
         document.getElementById("textMemo").value = ""; //labelをクリア
@@ -295,6 +294,7 @@ function allClearBtn(){
             background: "linear-gradient(#99f, #f99)",
             allowOutsideClick: false,
           });
+          questionsound("success");
 }
 
 /**
