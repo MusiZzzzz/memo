@@ -1,9 +1,17 @@
 /**
+ * 機能の説明書：
  * viewStorage -> localStorageからのデータの取得機能
- * saveLocalStorage -> localStorageの保存機能
- * selectTable -> 選択機能
- * delLocalStorage -> 削除機能
- * allClearStorage -> すべて削除機能
+ * ----------ボタン------------
+ * saveLocalStorage -> 保存ボタン
+ * selectTable -> 選択ボタン
+ * delLocalStorage -> 削除ボタン
+ * allClearStorage -> すべて削除ボタン
+ * ----------機能--------------
+ * saveBtn() -> 保存機能
+ * delBtn() -> 削除機能
+ * del_row() -> "trash"で削除機能
+ * allClearBtn -> すべて削除機能
+ * questionsound() -> 音声コントロール
  */
 ("use strict");
 
@@ -27,7 +35,7 @@ document.addEventListener(
   false
 );
 
-// 2.localStorageの保存機能
+// 保存ボタン start
 function saveLocalStorage() {
   var save = document.getElementById("save");
   save.addEventListener(
@@ -37,8 +45,6 @@ function saveLocalStorage() {
       const key = document.getElementById("textKey").value; // get key
       const value = document.getElementById("textMemo").value; //  get value
       if (key != "" && value != "") {
-        //key と value　内容がある場合
-        //処理の確認用窓口
         let SaveReally = `LocalStorageのテーブルに<span class="custom-text-color-key">「${key}」</span>と<span class="custom-text-color-value">「${value}」</span>を保存(save)します。よろしいでしょうか?`;
         Swal.fire({
           title: "Memo app",
@@ -47,8 +53,8 @@ function saveLocalStorage() {
           showCancelButton: true,
         }).then(function (Saveend) {
           if (Saveend.value === true) {
-            saveBtn();
-          } //save機能を使用
+            saveBtn(); //save機能を使用
+          }
         });
         questionsound("question");
       } else {
@@ -65,8 +71,10 @@ function saveLocalStorage() {
     false
   );
 }
+// 保存ボタン end
 
-//5.選択
+
+//5.選択ボタン　start
 function selectTable() {
   const select = document.getElementById("select");
   select.addEventListener(
@@ -78,9 +86,10 @@ function selectTable() {
     false
   );
 }
+//5.選択ボタン　end
 
-//<Delete />;
-//6.削除
+
+//6.削除ボタン　start
 function delLocalStorage() {
   const del = document.getElementById("del");
   del.addEventListener(
@@ -124,17 +133,18 @@ function delLocalStorage() {
 
   del_row(); // class:trashボタンをaddEvenListener使用;
 }
+//6.削除ボタン　end
 
 
 // version-up5 add-end
 
-// 7.すべて削除
+// 7.すべて削除 start
 function allClearStorage() {
   const allClear = document.getElementById("allClear");
   allClear.addEventListener("click", function (e) {
     e.preventDefault();
     questionsound("question");
-    //処理の確認用窓口
+    //処理の確認用
     let w_confirm = `LocalStorageのテーブルを<span class="custom-text-color-key">すべて</span>削除(all Clear)します。 よろしいでしょうか`;
     Swal.fire({
       title: "Memo app",
@@ -151,9 +161,10 @@ function allClearStorage() {
     });
   });
 }
+// 7.すべて削除 end
 
 
-//　選択機能
+//　選択機能 start
 function selectCheckbox(mode) {
   // let w_sel = "0";
   let w_cnt = 0;
@@ -198,8 +209,9 @@ function selectCheckbox(mode) {
     }
   }
 }
+//　選択機能 end
 
-// 保存機能
+// 保存機能 start
 function saveBtn() {
   const key = document.getElementById("textKey").value; //HtmlからtextKeyの値はkeyという変数を代入する
   const value = document.getElementById("textMemo").value; //HtmlからtextMemoの値はValueという変数を代入する
@@ -217,11 +229,12 @@ function saveBtn() {
   document.getElementById("textKey").value = ""; //labelをクリア
   document.getElementById("textMemo").value = ""; //labelをクリア
 }
+// 保存機能 end
 
-
-//削除機能
+//削除機能 start
 function delBtn(){
   const chkbox1 = document.getElementsByName("chkbox1");
+  const table1 = document.getElementById("table1");
   w_cnt = selectCheckbox("del");
   for (let i = 0; i < chkbox1.length; i++) {
     if (chkbox1[i].checked) {
@@ -243,9 +256,10 @@ function delBtn(){
   document.getElementById("textKey").value = ""; //labelをクリア
   document.getElementById("textMemo").value = ""; //labelをクリア
 }
+//削除機能 end
 
 // version-up5 add-str
-//trashで削除機能
+//trashで削除機能 start
 function del_row() {
   const table1 = document.getElementById("table1"); // get table1
   table1.addEventListener("click", (e) => {
@@ -281,7 +295,9 @@ function del_row() {
     }
   });
 }
+//trashで削除機能 end
 
+// すべて削除機能　start
 function allClearBtn(){
           //localStorageの削除指令を使用する
           localStorage.clear();
@@ -296,9 +312,11 @@ function allClearBtn(){
           });
           questionsound("success");
 }
+// すべて削除機能　end
 
+//音声コントロール　start
 /**
- * 音声コントロール機能
+ * 音声コントロール機能説明:
  * "start" -> NO
  *  "question" -> question
  * "success" -> OK
@@ -317,8 +335,10 @@ function questionsound(control) {
     qsmusic.play();
   }
 }
+// 音声コントロール　end
 
-// localStorageからのデータの取得とテーブルへ表示
+// table / list 管理　start
+// localStorageからのデータの取得とテーブルへ表示　start
 function viewStorage() {
   const list = document.getElementById("list");
 
@@ -346,8 +366,14 @@ function viewStorage() {
     td4.innerHTML = "<img src='img/trash_icon.png' class='trash'>";
   }
 
+  //localStorageのキーと値を表示 end 
+  // table / list 管理　end
+
+  //jqueryを使用して、数字を小から大まで並べる start
   $("#table1").tablesorter({
     sortList: [[1, 0]],
   });
   $("#table1").trigger("update");
 }
+
+  //jqueryを使用して、数字を小から大まで並べる end
